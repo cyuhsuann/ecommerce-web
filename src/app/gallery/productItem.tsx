@@ -19,7 +19,7 @@ export function ProductItem() {
                     />
                     <p>{product.name}</p>
                     <p>$ {product.price}</p>
-                    <p><AddButton /></p>
+                    <div><AddButton /></div>
                 </div>
             ))}
 
