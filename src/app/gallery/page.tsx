@@ -1,10 +1,7 @@
-import { ProductItem } from "./productItem";
-
-import { data } from "./products"
-
+import { ProductItem } from "./products/[id]/productItem";
 
 export default async function Page() {
-    const { products } = data
+
     return (
         <main>
             <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
