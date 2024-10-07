@@ -11,7 +11,7 @@ export const data = {
             id: 1,
             name: 'Tea Pot Set',
             image: '/products/IMG_5331.png',
-            price: 120,
+            price: 300,
             stock: 10,
             description: 'Artist-- YuChi'
         },
@@ -27,7 +27,7 @@ export const data = {
             id: 3,
             name: 'Tea Pot',
             image: '/products/IMG_5333.png',
-            price: 120,
+            price: 180,
             stock: 15,
             description: 'Artist-- YuChi'
         },
@@ -35,7 +35,7 @@ export const data = {
             id: 4,
             name: 'Tea Pot Set - Dark',
             image: '/products/IMG_5331.png',
-            price: 120,
+            price: 320,
             stock: 16,
             description: 'Artist-- YuChi'
         },
@@ -43,7 +43,7 @@ export const data = {
             id: 5,
             name: 'Tea Cup * 8',
             image: '/products/IMG_5332.png',
-            price: 120,
+            price: 200,
             stock: 9,
             description: 'Artist-- YuChi'
         },
@@ -51,7 +51,7 @@ export const data = {
             id: 6,
             name: 'Tea Pot - Special',
             image: '/products/IMG_5333.png',
-            price: 120,
+            price: 350,
             stock: 6,
             description: 'Artist-- YuChi'
         },
