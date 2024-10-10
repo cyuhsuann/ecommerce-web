@@ -3,7 +3,7 @@ import { useEffect, useState } from "react"
 import { data } from "../gallery/products/[id]/products";
 
 
-// TODO: Check what different between `type` and `interface` !!!🤚🤚🤚
+// NOTE: `type` is more flexible while `interface` is to describe the shape of an object.
 type Item = {
     id: number;
     name: string;
@@ -19,18 +19,18 @@ type CartItem = {
     price: number;
     shippingType: string;
     shippingFee: number;
-    // TODO: Check what does `void` do !!!🤚🤚🤚
+    // NOTE: `void` is used where there is no data as return type
     setQuantity: (quantity: number) => void;
     setShippingType: (type: string) => void;
     setShippingFee: (fee: number) => void;
     cartList: string[];
-    setCartList: (type: string[]) => void;
+    setCartList: (items: string[]) => void;
 }
 
 const Product = data.products
 
 // TODO: Check what does the parameter do !!!🤚🤚🤚
-export default function CartItemData(data: { products: Item[] }): CartItem {
+export default function CartItemData(item: { products: Item[] }): CartItem {
 
     // NOTE: `useState` is used to store item's ID and NAME
     // NOTE: `cartItemId` is initially set to NULL, unless `setCartItemId` function 
@@ -62,7 +62,7 @@ export default function CartItemData(data: { products: Item[] }): CartItem {
             }
         }
         // TODO: Check what is `[data.products]` for 🤚🤚🤚
-    }, [data.products]);
+    }, [item.products]);
 
     return { //NOTE: If without `type CartItem`, they would cause error
         cartItemId,

@@ -1,6 +1,9 @@
+'use client';
+
 import { ProductItem } from "./products/[id]/productItem";
 
-export default async function Page() {
+
+export default function Page() {
 
     return (
         <main>
