@@ -47,8 +47,8 @@ export default function CartItemData(item: { products: Item[] }): CartItem {
     // NOTE: `useEffect` is used to deal with "side effects", such as data require, DOM etc.
     // NOTE: As `[]` is a second parameter and empty, ensuring useEffect only uses once.
     useEffect(() => {
-        const id = JSON.parse(localStorage.getItem('cartItemId') || 'null');
-        const name = JSON.parse(localStorage.getItem('cartItemName') || 'null');
+        const id = JSON.parse(localStorage.getItem('cartItemId') ?? 'null');
+        const name = JSON.parse(localStorage.getItem('cartItemName') ?? 'null');
 
         setCartItemId(id);
         setCartItemName(name);
