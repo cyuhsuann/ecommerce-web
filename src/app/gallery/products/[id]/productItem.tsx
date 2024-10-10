@@ -2,7 +2,6 @@
 import Image from "next/image";
 import { data } from "./products";
 import Link from "next/link";
-// import CartItemData, { increaseQuantity, decreaseQuantity } from "../../../cart/calculate"
 
 import { Button } from "~/components/ui/button";
 import {
@@ -13,14 +12,12 @@ import {
     SheetTitle,
     SheetTrigger,
 } from "~/components/ui/sheet"
-
+import { useState } from "react";
+import { stripePage } from "~/app/script/stripe";
 
 
 // NOTE: to show the list of the products
 export function ProductItem() {
-
-    // NOTE: OR it can be defined ` const {products} = data`
-    const products = data.products
 
     // NOTE: Extremly important to connect to the other page, e.g. /cart wouldn't show up
     const handleAddtoCart = (id: number, name: string) => {
@@ -28,15 +25,33 @@ export function ProductItem() {
         // These 'cartItemId' and 'cartItemName' are VERY important, DO NOT use the same anme
         localStorage.setItem('cartItemId', JSON.stringify(id));
         localStorage.setItem('cartItemName', JSON.stringify(name));
+
+    }
+
+    const [quantity, setQuantity] = useState(1);
+
+    function decreaseQuantity() {
+        if (quantity > 1) {
+            setQuantity(quantity - 1);
+        } else {
+            alert('Could not be less ...')
+        }
+    }
+
+    function increaseQuantity() {
+        if (quantity < 10) {
+            setQuantity(quantity + 1);
+        } else {
+            alert('There is no more !');
+        }
     }
 
 
 
     return (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
-
             {/* NOTE: To show the each product */}
-            {products.map((product) => {
+            {data.products.map((product) => {
                 return (
                     <div key={product.id}>
                         <Image
@@ -70,12 +85,14 @@ export function ProductItem() {
 
                                     Item: {product.name} <br />
                                     Price: {product.price} <br />
-                                    {/* TODO: Have NOT finished it yet.💪💪💪 */}
-                                    {/* <Button onClick={() => decreaseQuantity(quantity, setQuantity)}> - </Button>
+                                    <Button onClick={decreaseQuantity}> - </Button>
                                     Quantity: {quantity}
-                                    <Button onClick={() => increaseQuantity(quantity, stock, setQuantity)}> + </Button> */}
-                                    {/* Total Price: ${(quantity * price) + shippingFee} */}
+                                    <Button onClick={increaseQuantity}> + </Button>
+                                    <br />
+                                    Total Price: ${quantity * product.price}
                                 </div>
+                                <Button onClick={stripePage}>Check_Out</Button> <br />
+                                <br />
                                 <Link href="/cart">
                                     <Button onClick={() =>
                                         handleAddtoCart(product.id, product.name)}
