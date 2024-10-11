@@ -1,7 +1,7 @@
 'use client'
 import Image from "next/image";
 import { data } from "./products";
-// import Link from "next/link";
+import Link from "next/link";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -13,24 +13,15 @@ import {
     SheetTrigger,
 } from "~/components/ui/sheet"
 import { useState } from "react";
-// import { stripePage } from "~/app/stripe/stripe";
+
+
 
 export function stripeButton(): void {
     console.log("check out system")
 }
 
-
 // NOTE: to show the list of the products
 export function ProductItem() {
-
-    // NOTE: Extremly important to connect to the other page, e.g. /cart wouldn't show up
-    // const handleAddtoCart = (id: number, name: string) => {
-    //     // Because `localStorage` can only store string, using JSON to change its type
-    //     // These 'cartItemId' and 'cartItemName' are VERY important, DO NOT use the same anme
-    //     localStorage.setItem('cartItemId', JSON.stringify(id));
-    //     localStorage.setItem('cartItemName', JSON.stringify(name));
-
-    // }
 
     const [quantity, setQuantity] = useState(1);
 
@@ -97,12 +88,7 @@ export function ProductItem() {
                                 </div>
                                 <Button onClick={stripeButton}>Check_Out</Button> <br />
                                 <br />
-                                {/* NOTE: This button is temporary closed, because the page has been deleted */}
-                                {/* <Link href="/cart">
-                                    <Button onClick={() =>
-                                        handleAddtoCart(product.id, product.name)}
-                                        className="btn btn-primary">View Cart</Button>
-                                </Link> */}
+                                {/* <Button>Check_Out</Button> */}
                             </SheetContent>
                         </Sheet>
                     </div>
