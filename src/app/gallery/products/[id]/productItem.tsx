@@ -93,11 +93,12 @@ export function ProductItem() {
                                 </div>
                                 <Button onClick={stripePage}>Check_Out</Button> <br />
                                 <br />
-                                <Link href="/cart">
+                                {/* NOTE: This button is temporary closed, because the page has been deleted */}
+                                {/* <Link href="/cart">
                                     <Button onClick={() =>
                                         handleAddtoCart(product.id, product.name)}
                                         className="btn btn-primary">View Cart</Button>
-                                </Link>
+                                </Link> */}
                             </SheetContent>
                         </Sheet>
                     </div>
