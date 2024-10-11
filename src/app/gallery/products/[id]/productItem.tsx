@@ -13,7 +13,7 @@ import {
     SheetTrigger,
 } from "~/components/ui/sheet"
 import { useState } from "react";
-import { stripePage } from "~/app/script/stripe";
+import { stripePage } from "~/app/stripe/stripe";
 
 
 // NOTE: to show the list of the products
