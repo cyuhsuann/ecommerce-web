@@ -1,16 +1,14 @@
 'use client'
 import { useEffect } from 'react';
 import { Button } from '~/components/ui/button';
-import { loadStripe } from '@stripe/stripe-js';
+import { stripePromise } from './loading';
 
-
-// Make sure to call loadStripe outside of a component’s render to avoid
-// recreating the Stripe object on every render.
-const stripePromise = loadStripe(
-    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
-);
 
 export default function PreviewPage() {
+
+    // eslint-disable-next-line
+    const stripe = stripePromise;
+
     useEffect(() => {
         // Check to see if this is a redirect back from Checkout
         const query = new URLSearchParams(window.location.search);
@@ -33,5 +31,3 @@ export default function PreviewPage() {
         </form>
     );
 }
-
-export { stripePromise };
