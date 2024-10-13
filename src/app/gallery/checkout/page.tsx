@@ -5,9 +5,9 @@ import { Button } from '~/components/ui/button';
 
 // Make sure to call loadStripe outside of a component’s render to avoid
 // recreating the Stripe object on every render.
-const stripePromise = process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY
-    ? loadStripe(process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY)
-    : () => { throw new Error('There is on Public Stripe Publishable Key') };
+const stripePromise = loadStripe(
+    process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY!
+);
 
 
 
@@ -25,7 +25,7 @@ export default function PreviewPage() {
     }, []);
 
     return (
-        <form action="/checkout_sessions" method="POST">
+        <form action="/api/checkout" method="POST">
             <section>
                 <Button type="submit" role="link">
                     Checkout

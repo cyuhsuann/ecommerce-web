@@ -1,7 +1,6 @@
 'use client'
 import Image from "next/image";
 import { data } from "./products";
-import Link from "next/link";
 
 import { Button } from "~/components/ui/button";
 import {
@@ -13,12 +12,14 @@ import {
     SheetTrigger,
 } from "~/components/ui/sheet"
 import { useState } from "react";
+import PreviewPage from "~/app/gallery/checkout/page";
 
 
+function stripeButton() {
+    console.log("Going to Check Out System ...")
+    PreviewPage()
+};
 
-export function stripeButton(): void {
-    console.log("check out system")
-}
 
 // NOTE: to show the list of the products
 export function ProductItem() {
@@ -40,8 +41,6 @@ export function ProductItem() {
             alert('There is no more !');
         }
     }
-
-
 
     return (
         <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
@@ -88,7 +87,6 @@ export function ProductItem() {
                                 </div>
                                 <Button onClick={stripeButton}>Check_Out</Button> <br />
                                 <br />
-                                {/* <Button>Check_Out</Button> */}
                             </SheetContent>
                         </Sheet>
                     </div>

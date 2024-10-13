@@ -1,6 +1,6 @@
 'use client';
 
-import PreviewPage from "../checkout";
+// import PreviewPage from "./checkout";
 import { ProductItem } from "./products/[id]/productItem";
 
 export default function Page() {
@@ -12,7 +12,6 @@ export default function Page() {
                 </h1>
             </div>
             <ProductItem />
-            <PreviewPage />
         </main>
     )
 }
