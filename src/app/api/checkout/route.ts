@@ -1,3 +1,5 @@
+// NOTE: NextRequest and NextReponse will only work for middleware, and not for 
+// pages or components, so there is a specific command line for it.
 // eslint-disable-next-line
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from 'stripe';
