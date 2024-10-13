@@ -7,13 +7,13 @@ const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 
 // eslint-disable-next-line
-export function GET(req: NextRequest, res: NextResponse) {
+function GET(req: NextRequest, res: NextResponse) {
     return new Response(JSON.stringify({ code: "Hello Yooshie" }), {
         status: 200
     })
 }
 
-export default async function handler(req: NextRequest, res: NextResponse) {
+async function handler(req: NextRequest, res: NextResponse) {
     if (req.method === 'GET') {
         console.log(res)
         console.log("\n\n\n\n\n\n")
@@ -74,4 +74,4 @@ export default async function handler(req: NextRequest, res: NextResponse) {
     }
 }
 
-// export { GET, handler as POST };
+export { GET, handler as POST };
