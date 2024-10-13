@@ -1,14 +1,19 @@
+// eslint-disable-next-line
 import { NextRequest, NextResponse } from "next/server";
+import Stripe from 'stripe';
 
-const stripe = require('stripe')(process.env.STRIPE_SECRET_KEY);
+// NOTE: Instead using `require()`, should use `Stripe()`
+const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
-function GET(req: NextRequest, res: NextResponse) {
+
+// eslint-disable-next-line
+export function GET(req: NextRequest, res: NextResponse) {
     return new Response(JSON.stringify({ code: "Hello Yooshie" }), {
         status: 200
     })
 }
 
-async function handler(req: NextRequest, res: NextResponse) {
+export default async function handler(req: NextRequest, res: NextResponse) {
     if (req.method === 'GET') {
         console.log(res)
         console.log("\n\n\n\n\n\n")
@@ -40,15 +45,21 @@ async function handler(req: NextRequest, res: NextResponse) {
                 // cancel_url: `${req.headers}/?canceled=true`,
                 cancel_url: 'https://example.com/cancelled',
             });
-            return NextResponse.redirect(new URL(session.url), {
+            return NextResponse.redirect(new URL(session.url!), {
                 status: 303,
             });
 
-        } catch (err: any) {
-            console.log("********    here not right")
-            return NextResponse.json({ err }, {
-                status: err.statusCode || 500
+        } catch {
+            return NextResponse.json(new Error, {
+                status: 500
             });
+            // NOTE: Omit from now.
+            // catch (err) {
+            //     console.log("********    here not right")
+            //     return NextResponse.json({ err }, {
+            //         status: err.statusCode || 500
+            //     });
+
 
             // NOTE: Same as the one above.
             // res.status(err.statusCode || 500).json(err.message);
@@ -63,4 +74,4 @@ async function handler(req: NextRequest, res: NextResponse) {
     }
 }
 
-export { GET, handler as POST };
+// export { GET, handler as POST };

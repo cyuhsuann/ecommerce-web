@@ -1,6 +1,5 @@
 'use client';
 
-// import PreviewPage from "./checkout";
 import { ProductItem } from "./products/[id]/productItem";
 
 export default function Page() {
