@@ -1,7 +1,7 @@
 'use client'
 import { useEffect } from 'react';
 import { Button } from '~/components/ui/button';
-import { stripePromise } from './loading';
+import { stripePromise } from './load-stripe';
 
 
 export default function PreviewPage() {
