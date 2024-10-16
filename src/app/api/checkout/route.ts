@@ -19,7 +19,7 @@ async function handler(req: NextRequest, res: NextResponse) {
     if (req.method === 'GET') {
         console.log(res)
         console.log("\n\n\n\n\n\n")
-        console.log("********    here Fack POST")
+        console.log("********    here Feak POST")
 
         return new NextResponse("Hello", {
             status: 200
@@ -57,11 +57,9 @@ async function handler(req: NextRequest, res: NextResponse) {
             });
             // NOTE: Omit from now.
             // catch (err) {
-            //     console.log("********    here not right")
             //     return NextResponse.json({ err }, {
             //         status: err.statusCode || 500
             //     });
-
 
             // NOTE: Same as the one above.
             // res.status(err.statusCode || 500).json(err.message);

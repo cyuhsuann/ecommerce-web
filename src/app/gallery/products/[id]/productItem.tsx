@@ -12,13 +12,14 @@ import {
     SheetTrigger,
 } from "~/components/ui/sheet"
 import { useState } from "react";
-import PreviewPage from "~/app/gallery/checkout/page";
+
+import { useEffect } from 'react';
+import { stripePromise } from "../../checkout/load-stripe";
 
 
-function stripeButton() {
-    console.log("Going to Check Out System ...")
-    PreviewPage()
-};
+// function stripeButton() {
+//     console.log("Going to Check Out System ...")
+// };
 
 
 // NOTE: to show the list of the products
@@ -40,6 +41,21 @@ export function ProductItem() {
         } else {
             alert('There is no more !');
         }
+
+        const stripe = stripePromise;
+
+        useEffect(() => {
+            // Check to see if this is a redirect back from Checkout
+            const query = new URLSearchParams(window.location.search);
+            if (query.get('success')) {
+                console.log('Order placed! You will receive an email confirmation.');
+            }
+
+            if (query.get('canceled')) {
+                console.log('Order canceled -- continue to shop around and checkout when you’re ready.');
+            }
+        }, []);
+
     }
 
     return (
@@ -85,7 +101,14 @@ export function ProductItem() {
                                     <br />
                                     Total Price: ${quantity * product.price}
                                 </div>
-                                <Button onClick={stripeButton}>Check_Out</Button> <br />
+                                {/* <Button onClick={stripeButton}>Check_Out</Button> <br /> */}
+                                <form action="/api/checkout" method="POST">
+                                    <section>
+                                        <Button type="submit" role="link">
+                                            Checkout
+                                        </Button>
+                                    </section>
+                                </form>
                                 <br />
                             </SheetContent>
                         </Sheet>
