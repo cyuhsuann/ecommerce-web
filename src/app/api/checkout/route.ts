@@ -1,5 +1,8 @@
 // NOTE: NextRequest and NextReponse will only work for middleware, and not for 
-// pages or components, so there is a specific command line for it.
+// pages or components, so there is a specific command line for it. If it does 
+// not have a command line above it, then it will cause an error, like: 
+// Imports "NextRequest" are only used as type.
+
 // eslint-disable-next-line
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from 'stripe';
@@ -8,30 +11,15 @@ import Stripe from 'stripe';
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 
 
-// eslint-disable-next-line
-function GET(req: NextRequest, res: NextResponse) {
-    return new Response(JSON.stringify({ code: "Hello Yooshie" }), {
-        status: 200
-    })
-}
-
-async function handler(req: NextRequest, res: NextResponse) {
+async function handler(req: NextRequest) {
     if (req.method === 'GET') {
-        console.log(res)
-        console.log("\n\n\n\n\n\n")
-        console.log("********    here Fack POST")
-
-        return new NextResponse("Hello", {
+        return new NextResponse("GET from Pottery gallery", {
             status: 200
         })
-        // NOTE: Same as the one above.
-        // return new Response(JSON.stringify({ code: "Hello ~ ~ ~ " }), {
-        //     status: 200
-        // })
     }
+
     else if (req.method === 'POST') {
         try {
-            console.log("********    here success", JSON.stringify(req.headers))
             // Create Checkout Sessions from body params.
             const session = await stripe.checkout.sessions.create({
                 line_items: [
@@ -42,10 +30,11 @@ async function handler(req: NextRequest, res: NextResponse) {
                     },
                 ],
                 mode: 'payment',
+                // NOTE: Now, leaving the URLs connect to checkout page.
                 // success_url: `${req.headers}/?success=true`,
-                success_url: 'https://example.com/success',
+                success_url: 'http://localhost:3000/gallery/checkout',
                 // cancel_url: `${req.headers}/?canceled=true`,
-                cancel_url: 'https://example.com/cancelled',
+                cancel_url: 'http://localhost:3000/gallery/checkout',
             });
             return NextResponse.redirect(new URL(session.url!), {
                 status: 303,
@@ -55,25 +44,23 @@ async function handler(req: NextRequest, res: NextResponse) {
             return NextResponse.json(new Error, {
                 status: 500
             });
-            // NOTE: Omit from now.
-            // catch (err) {
-            //     console.log("********    here not right")
-            //     return NextResponse.json({ err }, {
-            //         status: err.statusCode || 500
-            //     });
-
-
-            // NOTE: Same as the one above.
-            // res.status(err.statusCode || 500).json(err.message);
         }
     } else {
-        // res.setHeader('Allow', 'POST');
-        // res.status(405).end('Method Not Allowed');
-
-        // res.status(200).json({ name: "Jane Doe" });
-        // NOTE: Same as the one above.
+        if (req.method !== 'POST') {
+            return new NextResponse('Method Not Allowed', {
+                status: 405,
+                headers: {
+                    Allow: 'POST'
+                }
+            })
+        }
         return NextResponse.json({ name: "Jane Doe" }, { status: 200 });
+        // NOTE: Original code:
+        // res.setHeaders('Allow', 'POST');
+        // res.status(405).end('Method Not Allowed');
+        // res.status(200).json({ name: "Jane Doe" });
     }
 }
 
-export { GET, handler as POST };
+// NOTE: This export is important for the Stripe page.
+export { handler as POST };
