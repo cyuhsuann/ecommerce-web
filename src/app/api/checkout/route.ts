@@ -32,9 +32,9 @@ async function handler(req: NextRequest) {
                 mode: 'payment',
                 // NOTE: Now, leaving the URLs connect to checkout page.
                 // success_url: `${req.headers}/?success=true`,
-                success_url: 'http://localhost:3000/gallery/checkout',
+                success_url: 'http://localhost:3000/gallery/checkout/?success=true',
                 // cancel_url: `${req.headers}/?canceled=true`,
-                cancel_url: 'http://localhost:3000/gallery/checkout',
+                cancel_url: 'http://localhost:3000/gallery/checkout/?canceled=true',
             });
             return NextResponse.redirect(new URL(session.url!), {
                 status: 303,
