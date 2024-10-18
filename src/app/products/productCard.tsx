@@ -1,17 +1,14 @@
 import Image from "next/image";
 
-type Product = {
-    id: number;
-    name: string;
-    image: string;
-    price: number;
-    stock: number;
-}
-
 type propProduct = {
-    product: Product
+    product: {
+        id: number;
+        name: string;
+        image: string;
+        price: number;
+        stock: number;
+    }
 }
-
 
 export default function ProductCard({ product }: propProduct) {
     return (

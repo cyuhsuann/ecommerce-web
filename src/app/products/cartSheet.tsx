@@ -13,16 +13,14 @@ import {
 } from "~/components/ui/sheet"
 import { Button } from "~/components/ui/button";
 
-type Product = {
-    id: number;
-    name: string;
-    image: string;
-    price: number;
-    stock: number;
-}
-
 type propProduct = {
-    product: Product
+    product: {
+        id: number;
+        name: string;
+        image: string;
+        price: number;
+        stock: number;
+    }
 }
 
 export default function CartSheet({ product }: propProduct) {
