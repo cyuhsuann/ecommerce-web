@@ -13,20 +13,23 @@ import {
 } from "~/components/ui/sheet"
 import { Button } from "~/components/ui/button";
 
-type propProduct = {
-    product: {
-        id: number;
-        name: string;
-        image: string;
-        price: number;
-        stock: number;
-    }
+export type Product = {
+    id: number;
+    name: string;
+    image: string;
+    price: number;
+    stock: number;
+}
+
+export type propProduct = {
+    product: Product
 }
 
 export default function CartSheet({ product }: propProduct) {
     const stock = product.stock
     const { quantity, increaseQuantity, decreaseQuantity } = Calculation(stock);
     const { isSuccess, isCanceled } = CheckoutStatus();
+
 
     return (
         <div>

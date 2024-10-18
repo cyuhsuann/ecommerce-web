@@ -1,14 +1,6 @@
 import Image from "next/image";
+import { propProduct } from "./cartSheet";
 
-type propProduct = {
-    product: {
-        id: number;
-        name: string;
-        image: string;
-        price: number;
-        stock: number;
-    }
-}
 
 export default function ProductCard({ product }: propProduct) {
     return (
