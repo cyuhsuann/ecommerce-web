@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export function Calculation() {
+export function Calculation(stock: number) {
     const [quantity, setQuantity] = useState<number>(1);
 
     function decreaseQuantity(): void {
@@ -12,7 +12,7 @@ export function Calculation() {
     };
 
     function increaseQuantity(): void {
-        if (quantity < 10) {
+        if (quantity < stock) {
             setQuantity(quantity + 1);
         } else {
             alert('There is no more !');

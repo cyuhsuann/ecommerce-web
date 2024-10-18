@@ -24,7 +24,8 @@ type propProduct = {
 }
 
 export default function CartSheet({ product }: propProduct) {
-    const { quantity, increaseQuantity, decreaseQuantity } = Calculation();
+    const stock = product.stock
+    const { quantity, increaseQuantity, decreaseQuantity } = Calculation(stock);
     const { isSuccess, isCanceled } = CheckoutStatus();
 
     return (
