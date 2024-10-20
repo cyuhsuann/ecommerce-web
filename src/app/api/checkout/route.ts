@@ -3,6 +3,7 @@ import { NextResponse } from "next/server";
 import Stripe from 'stripe';
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
+const nextUrl = process.env.NEXTAUTH_URL
 
 const logRequest = (verb: string) => { console.log(`${verb} Request Received`) }
 
@@ -23,8 +24,8 @@ export async function POST() {
                 },
             ],
             mode: 'payment',
-            success_url: 'http://localhost:3000/gallery/checkout/?success=true',
-            cancel_url: 'http://localhost:3000/gallery/checkout/?canceled=true',
+            success_url: `${nextUrl}/gallery/checkout/?success=true`,
+            cancel_url: `${nextUrl}/gallery/checkout/?canceled=true`,
         });
         return NextResponse.redirect(new URL(session.url!), { status: 303 });
     } catch {
