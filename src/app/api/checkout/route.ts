@@ -1,6 +1,7 @@
 'use server'
 import { NextResponse } from "next/server";
 import Stripe from 'stripe';
+import { productPrice } from "~/app/gallery/products/[id]/products";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 const nextUrl = process.env.NEXTAUTH_URL
@@ -12,6 +13,7 @@ export async function GET() {
     return new NextResponse(JSON.stringify({ code: "*********GET" }), { status: 200 })
 }
 
+
 export async function POST() {
     logRequest("POST");
     try {
@@ -19,8 +21,13 @@ export async function POST() {
             line_items: [
                 {
                     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    price: 'price_1Q8xomBmewR921WbEPn531NF',
+                    price: productPrice.product3,
                     quantity: 1,
+                },
+                {
+                    // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
+                    price: productPrice.product6,
+                    quantity: 2,
                 },
             ],
             mode: 'payment',
