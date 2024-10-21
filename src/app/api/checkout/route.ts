@@ -1,7 +1,7 @@
 'use server'
 import { NextResponse } from "next/server";
 import Stripe from 'stripe';
-import { productPrice } from "~/app/gallery/products/[id]/products";
+import { productPrice } from "~/app/products/[id]/products";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 const nextUrl = process.env.NEXTAUTH_URL
@@ -31,8 +31,8 @@ export async function POST() {
                 },
             ],
             mode: 'payment',
-            success_url: `${nextUrl}/gallery/checkout/?success=true`,
-            cancel_url: `${nextUrl}/gallery/checkout/?canceled=true`,
+            success_url: `${nextUrl}/gallery/?success=true`,
+            cancel_url: `${nextUrl}/gallery/?canceled=true`,
         });
         return NextResponse.redirect(new URL(session.url!), { status: 303 });
     } catch {

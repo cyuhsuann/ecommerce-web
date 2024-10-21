@@ -1,6 +1,8 @@
 'use client';
 
-import { ProductItem } from "./products/[id]/productItem";
+import { data } from "../products/[id]/products";
+import { CartSheet } from "../products/cartSheet";
+import ProductItem from "../products/productItem";
 
 export default function Page() {
     return (
@@ -10,7 +12,17 @@ export default function Page() {
                     Pottery <span className="text-[hsl(280,100%,70%)]">Gallery</span>
                 </h1>
             </div>
-            <ProductItem />
+            <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
+                {/* NOTE: To show the each product */}
+                {data.products.map((product) => {
+                    return (
+                        <div key={product.id}>
+                            <ProductItem product={product} />
+                            <CartSheet product={product} />
+                        </div>
+                    )
+                })}
+            </div>
         </main>
     )
 }
