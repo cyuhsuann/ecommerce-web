@@ -1,6 +1,5 @@
 'use client'
 import Image from "next/image";
-import { CheckoutStatus } from "../checkout/checkoutStatus";
 import { Calculation } from "../tools/calculation";
 
 import { Button } from "~/components/ui/button";
@@ -31,7 +30,7 @@ export type propProduct = {
 export function CartSheet({ product }: propProduct) {
     const stock = product.stock
     const { quantity, increaseQuantity, decreaseQuantity } = Calculation(stock);
-    const { isSuccess, isCanceled } = CheckoutStatus();
+
 
     return (
         <div>
@@ -65,8 +64,6 @@ export function CartSheet({ product }: propProduct) {
 
                     <form action="/api/checkout" method="POST">
                         <Button>Checkout</Button>
-                        {isSuccess && <p>Order placed! You will receive an email confirmation.</p>}
-                        {isCanceled && <p>Order canceled -- Continue to shop around and checkout when you’re ready.</p>}
                     </form>
 
                 </SheetContent>

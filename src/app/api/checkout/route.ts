@@ -31,8 +31,8 @@ export async function POST() {
                 },
             ],
             mode: 'payment',
-            success_url: `${nextUrl}/gallery/?success=true`,
-            cancel_url: `${nextUrl}/gallery/?canceled=true`,
+            success_url: `${nextUrl}/checkout/?success=true`,
+            cancel_url: `${nextUrl}/checkout/?canceled=true`,
         });
         return NextResponse.redirect(new URL(session.url!), { status: 303 });
     } catch {

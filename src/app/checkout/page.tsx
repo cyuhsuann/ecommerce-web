@@ -1,14 +1,11 @@
 'use client'
 import { useEffect, useState } from 'react';
 import { stripePromise } from './load-stripe';
+import { Button } from "~/components/ui/button";
+import Link from "next/link";
 
 
-type CheckoutStatus = {
-    isSuccess: boolean;
-    isCanceled: boolean;
-}
-
-export function CheckoutStatus(): CheckoutStatus {
+export default function CheckoutStatusPage() {
 
     // eslint-disable-next-line
     const stripe = stripePromise;
@@ -34,5 +31,17 @@ export function CheckoutStatus(): CheckoutStatus {
         }
     }, []);
 
-    return { isSuccess, isCanceled }
+    return (
+        <div>
+            <div>
+                {isSuccess && <p>Order placed! You will receive an email confirmation.</p>}
+                {isCanceled && <p>Order canceled -- Continue to shop around and checkout when you’re ready.</p>}
+            </div>
+            <div>
+                <Link href={"/gallery"}>
+                    <Button>Back to Gallery</Button>
+                </Link>
+            </div>
+        </div>
+    )
 }
