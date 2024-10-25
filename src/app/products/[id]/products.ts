@@ -8,7 +8,7 @@ export type productsType = {
 }
 
 export const data = {
-    products: atom([
+    products: [
         {
             id: 1,
             name: 'Tea Pot Set',
@@ -63,7 +63,7 @@ export const data = {
             stock: 6,
             description: 'Artist-- YuChi'
         },
-    ])
+    ]
 }
 
 export const productPrice = atom({
