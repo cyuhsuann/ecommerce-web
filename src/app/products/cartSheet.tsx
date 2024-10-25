@@ -12,25 +12,9 @@ import {
     SheetTrigger,
 } from "~/components/ui/sheet";
 import { useState } from "react";
-
-
-export type Product = {
-    id: number;
-    name: string;
-    image: string;
-    price: number;
-    stock: number;
-}
-
-export type propProduct = {
-    product: Product
-}
-
-export type CartItem = {
-    product: Product;
-    quantity: number;
-}
-
+import { useAtom } from 'jotai'
+import { data } from "./[id]/products";
+import { propProduct } from "./type";
 
 
 // NOTE: Show the list of the products in the cart
@@ -39,38 +23,14 @@ export function CartSheet({ product }: propProduct) {
     const { quantity, increaseQuantity, decreaseQuantity } = Calculation(stock);
 
     // NOTE: Manage the cart status
-    const [cart, setCart] = useState<CartItem[]>([]);
-    const [likes, setLikes] = useState(0)
+    const [cart, setCart] = useAtom(data.products);
 
     function addToCart() {
-        setCart(prevCart => {
-            // console.log("””sgfcsbdヴィウセ”、", prevCart)
-            // prevCart.push({ product, quantity: 1 })
-            // const selectedItemIndex = prevCart.map(item => item.product.id === product.id);
-            // console.log('**********', selectedItemIndex)
-            // return prevCart
-
-            const selectedItemIndex = prevCart.findIndex(item => item.product.id === product.id);
-
-            if (selectedItemIndex === -1) {
-                return [...prevCart, { product, quantity: 1 }];
-            } else {
-                const updatedCart = prevCart.map((item, index) => {
-                    if (index === selectedItemIndex) {
-                        return { ...item, quantity: item.quantity + 1 };
-                    }
-                    return item;
-                });
-                return updatedCart;
-            }
-        });
+        setCart((prevCart: any) => {
+            console.log('******', prevCart)
+            return prevCart
+        })
     };
-
-
-    function pauseLike() {
-        setLikes(likes + 1);
-        console.log("+1")
-    }
 
 
     return (
@@ -78,14 +38,19 @@ export function CartSheet({ product }: propProduct) {
         <div>
             {/* NOTE: To show the item in the cart */}
             <Sheet>
-                <SheetTrigger>Show Cart</SheetTrigger>
+                <SheetTrigger onClick={addToCart}>Show Cart</SheetTrigger>
                 <SheetContent>
                     <SheetHeader>
                         <SheetTitle>Cart</SheetTitle>
                         <SheetDescription>Items in your cart</SheetDescription>
                     </SheetHeader>
+                    hahaha
 
-                    <div>
+                </SheetContent>
+            </Sheet>
+
+            {/* <div>
+            <div>
                         {cart.length > 0 ? cart.map((item) => (
                             <div key={item.product.id}>
                                 <Image
@@ -113,10 +78,8 @@ export function CartSheet({ product }: propProduct) {
                     </form>
                     <Button onClick={addToCart}>Click me!</Button>
 
-                    <Button onClick={pauseLike}>Like {likes}</Button>
-
-                </SheetContent>
-            </Sheet>
+            </div> */}
         </div>
+
     )
 }

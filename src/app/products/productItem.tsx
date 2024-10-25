@@ -1,5 +1,5 @@
 import Image from "next/image"
-import { type propProduct } from "./cartSheet"
+import { type propProduct } from "./type"
 
 export default function ProductItem({ product }: propProduct) {
     return (

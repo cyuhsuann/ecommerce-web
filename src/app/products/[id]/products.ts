@@ -1,3 +1,5 @@
+import { atom, Atom } from "jotai";
+
 export type productsType = {
     id: number;
     name: string;
@@ -6,7 +8,7 @@ export type productsType = {
 }
 
 export const data = {
-    products: [
+    products: atom([
         {
             id: 1,
             name: 'Tea Pot Set',
@@ -61,15 +63,15 @@ export const data = {
             stock: 6,
             description: 'Artist-- YuChi'
         },
-    ]
+    ])
 }
 
-export const productPrice = {
+export const productPrice = atom({
     product1: 'price_1QCFIuBmewR921WbydIvQebI',
     product2: 'price_1QCFK1BmewR921WbGzRtnWkt',
     product3: 'price_1QCFKqBmewR921Wbzepc42Qm',
     product4: 'price_1QCFLCBmewR921WbClEVtBar',
     product5: 'price_1QCFLvBmewR921WbkaimbwCt',
     product6: 'price_1QCFMOBmewR921WbOEq8fCFh',
-}
+})
 
