@@ -1,9 +1,10 @@
 export type Product = {
-    id: number;
+    id?: number;
     name: string;
     image: string;
     price: number;
     stock: number;
+    description: string;
 }
 
 export type propProduct = {

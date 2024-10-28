@@ -2497,6 +2497,11 @@ jose@^5.9.3:
   resolved "https://registry.yarnpkg.com/jose/-/jose-5.9.4.tgz#70cd388f1e651bc23d138533758f287d777ff6ea"
   integrity sha512-WBBl6au1qg6OHj67yCffCgFR3BADJBXN8MdRvCgJDuMv3driV2nHr7jdGvaKX9IolosAsn+M0XRArqLXUhyJHQ==
 
+jotai-immer@^0.4.1:
+  version "0.4.1"
+  resolved "https://registry.yarnpkg.com/jotai-immer/-/jotai-immer-0.4.1.tgz#30da13384d7d8341685c79aa78cffa19756c8832"
+  integrity sha512-nQTt1HBKie/5OJDck1qLpV1PeBA6bjJLAczEYAx70PD8R4Mbu7gtexfBUCzJh6W6ecsOfwHksAYAesVth6SN9A==
+
 jotai@^2.10.1:
   version "2.10.1"
   resolved "https://registry.yarnpkg.com/jotai/-/jotai-2.10.1.tgz#8d5598d06fa295110de0914f10bd1d10ea229723"

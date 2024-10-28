@@ -2,8 +2,8 @@
 
 import { products } from "../products/[id]/products";
 import ProductItem from "../products/productItem";
-import { Provider, useAtom } from 'jotai'
-import { Product } from "../products/type";
+import { atom, useAtom } from 'jotai'
+import { type CartItem, Product, propProduct } from "../products/type";
 import {
     Sheet,
     SheetContent,
@@ -17,13 +17,32 @@ import { Button } from "~/components/ui/button";
 import { Calculation } from "../tools/calculation";
 
 
+const cartAtom = atom<CartItem[]>([]);
+
 export default function Page() {
     const [product, setProduct] = useAtom(products);
-    const stock = product.map(item => item.stock)
+    const [cart, setCart] = useAtom<CartItem[]>(cartAtom);
     const { quantity, increaseQuantity, decreaseQuantity } = Calculation(10);
-    function addToCart() {
-        console.log("LALALALA~~~")
+
+    function addToCart(selectedItem: Product) {
+        console.log("LALALALA")
+
+        setCart((prevCart: CartItem[]): any => {
+            // const productId = product.map((product: any) => product.id)
+            const existedItem = prevCart.find((item: any) => item.id === selectedItem.id)
+            if (existedItem) {
+                return prevCart.map(item => {
+                    item.product.id === selectedItem.id
+                        ? { ...item, quantity: item.quantity + 1 }
+                        : item
+                })
+            } else {
+                return [...prevCart, { product: selectedItem, quantity: 1 }]
+            }
+
+        })
     };
+
 
     return (
         <main>
@@ -34,59 +53,54 @@ export default function Page() {
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
                 {/* NOTE: To show the each product */}
-                {product.map((product: Product) => {
+                {product.map((product: Product): any => {
                     return (
                         <div key={product.id}>
                             <ProductItem product={product} />
-                            <Button onClick={addToCart}>add to Cart</Button>
+                            <Button onClick={() => addToCart(product)}>add to Cart</Button>
                         </div>
                     )
                 })}
             </div>
-            <div>
-                {/* //
-                {for _ in list: <Component addItem={(quantity)=>addToCart(itemId, quantity)}></Component>}
-                {/* Inside component *}
-                <Button onClick={addItem(quantity)}></Button>
-                /* end inside component *}
-                // */}
-                <Sheet>
-                    <SheetTrigger>Show the Cart</SheetTrigger>
-                    <SheetContent>
-                        <SheetHeader>
-                            <SheetTitle>Cart</SheetTitle>
-                            <SheetDescription>Items in your cart</SheetDescription>
-                        </SheetHeader>
-                        {product.map(product => {
-                            return (
-                                <div key={product.id}>
-                                    <Image
-                                        src={product.image}
-                                        width={0}
-                                        height={0}
-                                        style={{ width: "120px", height: "auto" }}
-                                        priority={true}
-                                        alt={product.name}
-                                    />
 
-                                    <p>Item: {product.name}</p>
-                                    <p>Price: {product.price}</p>
+            <Sheet>
+                <SheetTrigger>Show Cart</SheetTrigger>
+                <SheetContent>
+                    <SheetHeader>
+                        <SheetTitle>Cart</SheetTitle>
+                        <SheetDescription>Items in your cart</SheetDescription>
+                    </SheetHeader>
+                    here we are
+                    {cart.map((item: CartItem) => {
+                        return (
+                            <div key={item.product.id}>
+                                <Image
+                                    src={item.product.image}
+                                    width={0}
+                                    height={0}
+                                    style={{ width: "120px", height: "auto" }}
+                                    priority={true}
+                                    alt={item.product.name}
+                                />
+
+                                <p>Item: {item.product.name}</p>
+                                <p>Price: {item.product.price}
                                     <Button onClick={decreaseQuantity}> - </Button>
                                     Quantity: {quantity}
                                     <Button onClick={increaseQuantity}> + </Button>
-                                    <br />
-                                    <p>Total Price: ${quantity * product.price}</p>
-                                </div>
-                            )
-                        })}
-                        {/* IMPROTANT JST LEAVE THERE FROM NOW
-                        <form action="/api/checkout" method="POST">
-                            <Button>Checkout</Button>
-                        </form> */}
+                                </p>
+                                <p>Total Price: ${quantity * item.product.price}</p>
 
-                    </SheetContent>
-                </Sheet>
-            </div>
+                            </div>
+                        )
+                    })}
+                    {/* IMPROTANT JST LEAVE THERE FROM NOW
+                    <form action="/api/checkout" method="POST">
+                        <Button>Checkout</Button>
+                    </form> */}
+
+                </SheetContent>
+            </Sheet>
         </main>
     )
 }

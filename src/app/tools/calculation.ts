@@ -2,7 +2,7 @@ import { useState } from "react";
 
 
 export function Calculation(stock: number) {
-    const [quantity, setQuantity] = useState(1);
+    const [quantity, setQuantity] = useState(0);
 
     function decreaseQuantity(): void {
         if (quantity > 1) {

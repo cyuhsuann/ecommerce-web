@@ -1,12 +1,5 @@
 import { atom } from "jotai";
 
-export type productsType = {
-    id: number;
-    name: string;
-    price: number;
-    quantity: number
-}
-
 export const products = atom([
     {
         id: 1,
