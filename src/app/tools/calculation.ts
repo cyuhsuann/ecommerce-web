@@ -1,7 +1,8 @@
 import { CartItem } from "../products/type";
 
-export function decreaseQuantity(cart: CartItem[], setCart: (cart: CartItem[])
-    => void, productId: number) {
+export function decreaseQuantity(cart: CartItem[],
+    setCart: (cart: CartItem[]) => void, productId: number) {
+    // NOTE: use setCart to update the items in the cart
     setCart(cart.map((item: CartItem): any => {
         if (item.product.id === productId) {
             if (item.quantity > 1) {
@@ -15,8 +16,8 @@ export function decreaseQuantity(cart: CartItem[], setCart: (cart: CartItem[])
     }))
 }
 
-export function increaseQuantity(cart: CartItem[], setCart: (cart: CartItem[])
-    => void, productId: number) {
+export function increaseQuantity(cart: CartItem[],
+    setCart: (cart: CartItem[]) => void, productId: number) {
     setCart(cart.map((item: CartItem): any => {
         if (item.product.id === productId) {
             if (item.quantity < item.product.stock) {
