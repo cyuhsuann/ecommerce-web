@@ -28,18 +28,12 @@ export default function Page() {
         console.log("LALALALA")
 
         setCart((prevCart: CartItem[]): any => {
-            // const productId = product.map((product: any) => product.id)
-            const existedItem = prevCart.find((item: any) => item.id === selectedItem.id)
+            const existedItem = prevCart.find((item: any) => item.product.id === selectedItem.id)
             if (existedItem) {
-                return prevCart.map(item => {
-                    item.product.id === selectedItem.id
-                        ? { ...item, quantity: item.quantity + 1 }
-                        : item
-                })
+                return prevCart;
             } else {
                 return [...prevCart, { product: selectedItem, quantity: 1 }]
             }
-
         })
     };
 
@@ -85,9 +79,9 @@ export default function Page() {
 
                                 <p>Item: {item.product.name}</p>
                                 <p>Price: {item.product.price}
-                                    <Button onClick={decreaseQuantity}> - </Button>
+                                    <Button onClick={() => decreaseQuantity(item.product.id)}> - </Button>
                                     Quantity: {quantity}
-                                    <Button onClick={increaseQuantity}> + </Button>
+                                    <Button onClick={() => increaseQuantity(item.product.id)}> + </Button>
                                 </p>
                                 <p>Total Price: ${quantity * item.product.price}</p>
 
