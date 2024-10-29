@@ -14,7 +14,7 @@ import {
 } from "~/components/ui/sheet";
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
-import { Calculation } from "../tools/calculation";
+import { decreaseQuantity, increaseQuantity } from "../tools/calculation";
 
 
 const cartAtom = atom<CartItem[]>([]);
@@ -22,7 +22,6 @@ const cartAtom = atom<CartItem[]>([]);
 export default function Page() {
     const [product, setProduct] = useAtom(products);
     const [cart, setCart] = useAtom<CartItem[]>(cartAtom);
-    const { quantity, increaseQuantity, decreaseQuantity } = Calculation(10);
 
     function addToCart(selectedItem: Product) {
         console.log("LALALALA")
@@ -79,11 +78,11 @@ export default function Page() {
 
                                 <p>Item: {item.product.name}</p>
                                 <p>Price: {item.product.price}
-                                    <Button onClick={() => decreaseQuantity(item.product.id)}> - </Button>
-                                    Quantity: {quantity}
-                                    <Button onClick={() => increaseQuantity(item.product.id)}> + </Button>
+                                    <Button onClick={() => decreaseQuantity(cart, setCart, item.product.id)}> - </Button>
+                                    Quantity: {item.quantity}
+                                    <Button onClick={() => increaseQuantity(cart, setCart, item.product.id)}> + </Button>
                                 </p>
-                                <p>Total Price: ${quantity * item.product.price}</p>
+                                <p>Total Price: ${item.quantity * item.product.price}</p>
 
                             </div>
                         )

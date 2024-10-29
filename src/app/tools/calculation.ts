@@ -1,24 +1,31 @@
-import { useState } from "react";
+import { CartItem } from "../products/type";
 
-
-export function Calculation(stock: number) {
-    const [quantity, setQuantity] = useState(0);
-
-    function decreaseQuantity(product: any): void {
-        if (quantity > 1) {
-            setQuantity(quantity - 1);
-        } else {
-            alert('Could not be less ...')
+export function decreaseQuantity(cart: CartItem[], setCart: (cart: CartItem[])
+    => void, productId: number) {
+    setCart(cart.map((item: CartItem): any => {
+        if (item.product.id === productId) {
+            if (item.quantity > 1) {
+                return { ...item, quantity: item.quantity - 1 };
+            } else {
+                alert('Could not be less ...');
+                return item;
+            }
         }
-    };
+        return item;
+    }))
+}
 
-    function increaseQuantity(product: any): void {
-        if (quantity < stock) {
-            setQuantity(quantity + 1);
-        } else {
-            alert('There is no more !');
+export function increaseQuantity(cart: CartItem[], setCart: (cart: CartItem[])
+    => void, productId: number) {
+    setCart(cart.map((item: CartItem): any => {
+        if (item.product.id === productId) {
+            if (item.quantity < item.product.stock) {
+                return { ...item, quantity: item.quantity + 1 };
+            } else {
+                alert('There is no more !');
+                return item;
+            }
         }
-    };
-
-    return { quantity, decreaseQuantity, increaseQuantity }
+        return item;
+    }))
 }
