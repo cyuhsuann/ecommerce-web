@@ -3,7 +3,7 @@
 import { products } from "../products/[id]/products";
 import ProductItem from "../products/productItem";
 import { atom, useAtom } from 'jotai'
-import { type CartItem, Product, propProduct } from "../products/type";
+import type { CartItem, Product } from "../products/type";
 import {
     Sheet,
     SheetContent,
@@ -24,8 +24,8 @@ export default function Page() {
     const [cart, setCart] = useAtom<CartItem[]>(cartAtom);
 
     function addToCart(selectedItem: Product) {
-        setCart((prevCart: CartItem[]): any => {
-            const existedItem = prevCart.find((item: any) => item.product.id === selectedItem.id)
+        setCart((prevCart: CartItem[]): CartItem[] => {
+            const existedItem = prevCart.find((item: CartItem) => item.product.id === selectedItem.id)
             if (existedItem) {
                 return prevCart;
             } else {
@@ -42,7 +42,7 @@ export default function Page() {
                 </h1>
             </div>
             <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
-                {product.map((product: Product): any => {
+                {product.map((product: Product) => {
                     return (
                         <div key={product.id}>
                             <ProductItem product={product} />

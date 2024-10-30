@@ -1,7 +1,8 @@
 'use server'
 import { NextResponse } from "next/server";
 import Stripe from 'stripe';
-import { productPrice } from "~/app/products/[id]/products";
+// NOTE: Have not used this one.
+// import { productPrice } from "~/app/products/[id]/products";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 const nextUrl = process.env.NEXTAUTH_URL
@@ -21,12 +22,13 @@ export async function POST() {
             line_items: [
                 {
                     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    price: productPrice.product3,
+                    //NOTE: similer like this: productPrice.product3, but it still wrong.
+                    price: 'price_1QCFIuBmewR921WbydIvQebI',
                     quantity: 1,
                 },
                 {
                     // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    price: productPrice.product6,
+                    price: 'price_1QCFKqBmewR921Wbzepc42Qm',
                     quantity: 2,
                 },
             ],
