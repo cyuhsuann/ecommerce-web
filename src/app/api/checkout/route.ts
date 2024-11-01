@@ -1,13 +1,20 @@
 'use server'
-import { NextResponse } from "next/server";
+import { NextRequest, NextResponse } from "next/server";
 import Stripe from 'stripe';
-// NOTE: Have not used this one.
-// import { productPrice } from "~/app/products/[id]/products";
+import { CartItem } from "~/app/products/type";
 
 const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!)
 const nextUrl = process.env.NEXTAUTH_URL
-
 const logRequest = (verb: string) => { console.log(`${verb} Request Received`) }
+
+
+function transformToLineItem() {
+    const lines = [{
+        price: 'price_1QCFK1BmewR921WbGzRtnWkt',
+        quantity: 3
+    }]
+    return lines
+}
 
 export async function GET() {
     logRequest("GET")
@@ -15,23 +22,13 @@ export async function GET() {
 }
 
 
-export async function POST() {
+export async function POST(req: NextRequest) {
     logRequest("POST");
     try {
+
+        const line_items = transformToLineItem()
         const session = await stripe.checkout.sessions.create({
-            line_items: [
-                {
-                    // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    //NOTE: similer like this: productPrice.product3, but it still wrong.
-                    price: 'price_1QCFIuBmewR921WbydIvQebI',
-                    quantity: 1,
-                },
-                {
-                    // Provide the exact Price ID (for example, pr_1234) of the product you want to sell
-                    price: 'price_1QCFKqBmewR921Wbzepc42Qm',
-                    quantity: 2,
-                },
-            ],
+            line_items,
             mode: 'payment',
             success_url: `${nextUrl}/checkout/?success=true`,
             cancel_url: `${nextUrl}/checkout/?canceled=true`,
