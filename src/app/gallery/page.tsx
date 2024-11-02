@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { decreaseQuantity, increaseQuantity } from "../tools/calculation";
+import { useRouter } from "next/navigation";
 
 
 const cartAtom = atom<CartItem[]>([]);
@@ -22,6 +23,35 @@ const cartAtom = atom<CartItem[]>([]);
 export default function Page() {
     const [product] = useAtom(products);
     const [cart, setCart] = useAtom<CartItem[]>(cartAtom);
+    const router = useRouter();
+
+    async function sendToCheckout() {
+        // Grab cart state
+        // Send POST req to backend
+        // Await redirect response
+
+        const response = await fetch(`/api/checkout`, {
+            headers: { 'Content-Type': 'application/json' },
+            method: 'POST',
+            body: JSON.stringify({ cart })
+        });
+
+        if (!response.ok) {
+            console.log("Error")
+            return;
+        }
+        const data: any = await response.json();
+        console.log("Redirecting to:", data.url);
+
+        if (data.url) {
+            router.push(data.url);
+            console.log("$$$$     $$$$: ", data)
+        }
+
+        console.log("$$$$$$$$: ", data)
+
+        return data
+    }
 
     function addToCart(selectedItem: Product) {
         setCart((prevCart: CartItem[]): CartItem[] => {
@@ -84,7 +114,7 @@ export default function Page() {
                         })}
                         <br />
                         <div>
-                            <form action="/api/checkout" method="POST">
+                            <form onSubmit={sendToCheckout}>
                                 <Button>Checkout</Button>
                             </form>
                         </div>
