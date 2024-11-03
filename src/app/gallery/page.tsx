@@ -24,10 +24,6 @@ export default function Page() {
     const [cart, setCart] = useAtom<CartItem[]>(cartAtom);
 
     async function sendToCheckout() {
-        // Grab cart state
-        // Send POST req to backend
-        // Await redirect response
-
         const response = await fetch('/api/checkout', {
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
@@ -36,14 +32,13 @@ export default function Page() {
         console.log(response.ok)
         if (!response.ok) {
             console.error("Checkout request failed:", response.statusText);
-        }
+        };
 
         const data: Checkout = await response.json() as Checkout;
         if (data.url) {
             // NOTE: Connect to the backend
             window.location.href = data.url;
-        }
-
+        };
     }
 
     function addToCart(selectedItem: Product) {
