@@ -16,3 +16,8 @@ export type CartItem = {
     product: Product;
     quantity: number;
 }
+
+export type Checkout = {
+    url?: string;
+    error?: string;
+}

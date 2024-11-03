@@ -3,7 +3,7 @@
 import { products } from "../products/[id]/products";
 import ProductItem from "../products/productItem";
 import { atom, useAtom } from 'jotai'
-import type { CartItem, Product } from "../products/type";
+import type { CartItem, Checkout, Product } from "../products/type";
 import {
     Sheet,
     SheetContent,
@@ -15,7 +15,6 @@ import {
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { decreaseQuantity, increaseQuantity } from "../tools/calculation";
-import { useRouter } from "next/navigation";
 
 
 const cartAtom = atom<CartItem[]>([]);
@@ -23,34 +22,28 @@ const cartAtom = atom<CartItem[]>([]);
 export default function Page() {
     const [product] = useAtom(products);
     const [cart, setCart] = useAtom<CartItem[]>(cartAtom);
-    const router = useRouter();
 
     async function sendToCheckout() {
         // Grab cart state
         // Send POST req to backend
         // Await redirect response
 
-        const response = await fetch(`/api/checkout`, {
+        const response = await fetch('/api/checkout', {
             headers: { 'Content-Type': 'application/json' },
             method: 'POST',
             body: JSON.stringify({ cart })
-        });
-
+        })
+        console.log(response.ok)
         if (!response.ok) {
-            console.log("Error")
-            return;
+            console.error("Checkout request failed:", response.statusText);
         }
-        const data: any = await response.json();
-        console.log("Redirecting to:", data.url);
 
+        const data: Checkout = await response.json() as Checkout;
         if (data.url) {
-            router.push(data.url);
-            console.log("$$$$     $$$$: ", data)
+            // NOTE: Connect to the backend
+            window.location.href = data.url;
         }
 
-        console.log("$$$$$$$$: ", data)
-
-        return data
     }
 
     function addToCart(selectedItem: Product) {
@@ -114,9 +107,7 @@ export default function Page() {
                         })}
                         <br />
                         <div>
-                            <form onSubmit={sendToCheckout}>
-                                <Button>Checkout</Button>
-                            </form>
+                            <Button onClick={sendToCheckout}>Checkout</Button>
                         </div>
                     </SheetContent>
                 </Sheet>
