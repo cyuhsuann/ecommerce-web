@@ -15,6 +15,7 @@ import {
 import Image from "next/image";
 import { Button } from "~/components/ui/button";
 import { decreaseQuantity, increaseQuantity } from "../tools/calculation";
+import { toast } from "sonner";
 
 const cartAtom = atom<CartItem[]>([]);
 
@@ -50,6 +51,7 @@ export default function Page() {
         return prevCart;
       } else {
         console.log(...prevCart, { product: selectedItem, quantity: 1 });
+        toast("Add Item!");
         return [...prevCart, { product: selectedItem, quantity: 1 }];
       }
     });
@@ -57,61 +59,70 @@ export default function Page() {
 
   return (
     <main>
+      <Sheet>
+        <SheetTrigger
+          asChild
+          // className="justify-right container flex flex-col items-end"
+        >
+          <Button variant="outline">Show Cart</Button>
+        </SheetTrigger>
+        <SheetContent>
+          <SheetHeader>
+            <SheetTitle>Cart</SheetTitle>
+            <SheetDescription>Items in your cart</SheetDescription>
+          </SheetHeader>
+          {cart.map((item: CartItem) => {
+            return (
+              <div key={item.product.id}>
+                <Image
+                  src={item.product.image}
+                  width={0}
+                  height={0}
+                  style={{ width: "120px", height: "120px" }}
+                  priority={true}
+                  alt={item.product.name}
+                />
+
+                <p>Item: {item.product.name}</p>
+                <p>
+                  Price: {item.product.price}
+                  <Button
+                    onClick={() =>
+                      decreaseQuantity(cart, setCart, item.product.id)
+                    }
+                  >
+                    {" "}
+                    -
+                  </Button>
+                  Quantity: {item.quantity}
+                  <Button
+                    onClick={() =>
+                      increaseQuantity(cart, setCart, item.product.id)
+                    }
+                  >
+                    {" "}
+                    +
+                  </Button>
+                </p>
+                <p>Subtotal: ${item.quantity * item.product.price}</p>
+              </div>
+            );
+          })}
+          <br />
+
+          <div>
+            {cart ? (
+              <div></div>
+            ) : (
+              <Button onClick={sendToCheckout}>Checkout</Button>
+            )}
+          </div>
+        </SheetContent>
+      </Sheet>
       <div className="container flex flex-col items-center justify-center gap-12 px-4 py-16">
         <h1 className="text-5xl font-extrabold tracking-tight sm:text-[5rem]">
           Pottery <span className="text-[hsl(280,100%,70%)]">Gallery</span>
         </h1>
-        <Sheet>
-          <SheetTrigger>Show Cart</SheetTrigger>
-          <SheetContent>
-            <SheetHeader>
-              <SheetTitle>Cart</SheetTitle>
-              <SheetDescription>Items in your cart</SheetDescription>
-            </SheetHeader>
-            {cart.map((item: CartItem) => {
-              return (
-                <div key={item.product.id}>
-                  <Image
-                    src={item.product.image}
-                    width={0}
-                    height={0}
-                    style={{ width: "120px", height: "120px" }}
-                    priority={true}
-                    alt={item.product.name}
-                  />
-
-                  <p>Item: {item.product.name}</p>
-                  <p>
-                    Price: {item.product.price}
-                    <Button
-                      onClick={() =>
-                        decreaseQuantity(cart, setCart, item.product.id)
-                      }
-                    >
-                      {" "}
-                      -
-                    </Button>
-                    Quantity: {item.quantity}
-                    <Button
-                      onClick={() =>
-                        increaseQuantity(cart, setCart, item.product.id)
-                      }
-                    >
-                      {" "}
-                      +
-                    </Button>
-                  </p>
-                  <p>Subtotal: ${item.quantity * item.product.price}</p>
-                </div>
-              );
-            })}
-            <br />
-
-            <div>
-              <Button onClick={sendToCheckout}>Checkout</Button>
-            </div>
-          </SheetContent>
-        </Sheet>
       </div>
       <div className="grid grid-cols-1 gap-4 sm:grid-cols-3 md:gap-8">
         {product.map((product: Product) => {
@@ -123,7 +134,6 @@ export default function Page() {
           );
         })}
       </div>
-      <div></div>
     </main>
   );
 }
