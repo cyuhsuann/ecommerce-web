@@ -112,9 +112,9 @@ export default function Page() {
 
           <div>
             {cart ? (
-              <div></div>
-            ) : (
               <Button onClick={sendToCheckout}>Checkout</Button>
+            ) : (
+              <div></div>
             )}
           </div>
         </SheetContent>
